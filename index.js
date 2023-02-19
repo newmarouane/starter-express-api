@@ -15,7 +15,7 @@ app.all('/', async (req, res) => {
         '--disable-site-isolation-trials',]} );
   const page = await browser.newPage();
   
-  var url = 'https://jobviewtrack.com/fr-fr/job-1a13416048160c06461a440a1b041b15676206010a1c464a5a482f371fad8e17490204081da4cc21415f/abd846d5ff8abce585b15251956ee068.html?affid=0afaf0173305e4b8';
+  var url = 'https://jobviewtrack.com/fr-fr/job-1c4f417d4c160a4e650649100d632815044e170000004f297f5f44170a6c7715520669575f545710/d874a4ab712e6dd8fff99e22e3008ce4.html?affid=0afaf0173305e4b8';
   console.log(url);
   
   await page.goto(url, {waitUntil: 'load', timeout: 90000});
