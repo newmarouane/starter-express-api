@@ -15,7 +15,7 @@ app.all('/', async (req, res) => {
         '--disable-site-isolation-trials',]} );
   const page = await browser.newPage();
   
-  var url = 'https://www.npmjs.com/package/chrome-aws-lambda?activeTab=readme';
+  var url = 'https://jobviewtrack.com/fr-fr/job-1a13416048160c06461a440a1b041b15676206010a1c464a5a482f371fad8e17490204081da4cc21415f/abd846d5ff8abce585b15251956ee068.html?affid=0afaf0173305e4b8';
   console.log(url);
   
   await page.goto(url, {waitUntil: 'load', timeout: 90000});
