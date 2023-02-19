@@ -1,7 +1,7 @@
 const express = require('express')
 const puppeteer = require('puppeteer')
 const app = express()
-app.all('/', (req, res) => {
+app.all('/', async (req, res) => {
     console.log("Just got a request!")
     try {
   let browser;
