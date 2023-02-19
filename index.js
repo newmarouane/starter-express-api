@@ -6,7 +6,7 @@ app.all('/', async (req, res) => {
     try {
   let browser;
 
-    browser = await puppeteer.launch({ executablePath: "/usr/bin/chromium-browser",args: ['--no-sandbox', '--disable-setuid-sandbox','--disable-gpu',
+    browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox','--disable-gpu',
         '--disable-dev-shm-usage',
         '--no-first-run',
         '--no-zygote',
