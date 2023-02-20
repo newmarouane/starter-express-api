@@ -11,13 +11,7 @@ app.all('/', async (req, res) => {
   let browser;
 puppeteer.use(StealthPlugin())
 
-    browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox','--disable-gpu',
-        '--disable-dev-shm-usage',
-        '--no-first-run',
-        '--no-zygote',
-        '--deterministic-fetch',
-        '--disable-features=IsolateOrigins',
-        '--disable-site-isolation-trials',]} );
+    browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']} );
   const page = await browser.newPage();
   
   var url = 'https://jobviewtrack.com/fr-fr/job-1c4f417d4c160a4e650649100d632815044e170000004f297f5f44170a6c7715520669575f545710/d874a4ab712e6dd8fff99e22e3008ce4.html?affid=0afaf0173305e4b8';
