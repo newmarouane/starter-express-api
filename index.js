@@ -1,12 +1,17 @@
 const express = require('express')
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer-extra')
+
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+
+//const puppeteer = require('puppeteer')
 const app = express()
 app.all('/', async (req, res) => {
     console.log("Just got a request!")
     try {
   let browser;
+puppeteer.use(StealthPlugin())
 
-    browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox','--disable-gpu',
+    browser = await puppeteer.launch({headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox','--disable-gpu',
         '--disable-dev-shm-usage',
         '--no-first-run',
         '--no-zygote',
