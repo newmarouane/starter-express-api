@@ -14,7 +14,7 @@ puppeteer.use(StealthPlugin())
     browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']} );
   const page = await browser.newPage();
   
-  var url = 'https://jobviewtrack.com/fr-fr/job-1c4f417d4c160a4e650649100d632815044e170000004f297f5f44170a6c7715520669575f545710/d874a4ab712e6dd8fff99e22e3008ce4.html?affid=0afaf0173305e4b8';
+  var url = 'https://www.optioncarriere.com/jobad/fr570a1ea897a985defb53f15e669ff6f8';
   console.log(url);
   
   await page.goto(url, {waitUntil: 'load', timeout: 90000});
