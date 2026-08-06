@@ -17,6 +17,7 @@ app.all('/', async (req, res) => {
 
 
 	const { browser, page } = await connect({
+		executablePath: await chromium.executablePath(),
     headless: true,
 
     args: [],
