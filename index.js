@@ -4,7 +4,7 @@ const { connect } = require("puppeteer-real-browser");
 const puppeteer = require('rebrowser-puppeteer')
 const chromium = require("@sparticuz/chromium");
 
-const { BasicCrawler, RequestQueue } = require('crawlee');
+const { BasicCrawler, RequestQueue, sendRequest } = require('crawlee');
 /*
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());*/
