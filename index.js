@@ -20,14 +20,21 @@ app.all('/', async (req, res) => {
 
     const crawler = new BasicCrawler({
         requestQueue,
-        async requestHandler({ request, log,response, body }) {
-            log.info(`Body content length: ${body.length}`);
-        console.log(body); 
+       async requestHandler({ request, log }) {
+        log.info(`Fetching data from ${request.url}...`);
+        
+        // 1. Manually fetch the URL response using Crawlee's built-in helper
+        const response = await sendRequest({ url: request.url });
+        const body = response.body;
 
-        // Option 2: Display response metadata (status code, headers)
-        console.log(`Status Code: ${response.statusCode}`);
-        console.log(`Content Type: ${response.headers['content-type']}`);
-        },
+        // 2. Now you can safely check the body and display data
+        if (body) {
+            log.info(`Body content length: ${body.length}`);
+            console.log(body); 
+        } else {
+            log.warning('Response body is empty');
+        }
+    },
     });
 
     await crawler.run();
