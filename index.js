@@ -28,10 +28,15 @@ const viewport = {
     isMobile: false,
     width: 1920,
   };
+	let executablePath;
+
+if (!executablePath) {
+    executablePath = await chromium.executablePath();
+}
   const browser = await puppeteer.launch({
     args: await puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
     defaultViewport: viewport,
-    executablePath: await chromium.executablePath(),
+    executablePath: executablePath,
     headless: "shell",
   });
   const page = await browser.newPage();
