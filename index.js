@@ -9,7 +9,7 @@ app.get("/", async (req, res) => {
     try {
 		console.log(process.env.CHROME_PATH);
         browser = await puppeteer.launch({
-            executablePath: "/usr/bin/google-chrome",
+           // executablePath: "/usr/bin/google-chrome",
 		    headless: true,
 		    args: [
 		        "--no-sandbox",
