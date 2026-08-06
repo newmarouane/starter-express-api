@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && ./render-build.sh",
+    "build": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && node ./node_modules/puppeteer/install.js && ./render-build.sh",
     "start": "node index.js"
   },
   "repository": {
