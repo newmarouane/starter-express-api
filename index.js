@@ -4,7 +4,7 @@ const { connect } = require("puppeteer-real-browser");
 const puppeteer = require('rebrowser-puppeteer')
 const chromium = require("@sparticuz/chromium");
 
-const { BasicCrawler, RequestQueue, sendRequest } = require('crawlee');
+const { BasicCrawler, RequestQueue } = require('crawlee');
 /*
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());*/
@@ -20,7 +20,7 @@ app.all('/', async (req, res) => {
 
     const crawler = new BasicCrawler({
         requestQueue,
-       async requestHandler({ request, log }) {
+       async requestHandler({ request, sendRequest, log }) {
         log.info(`Fetching data from ${request.url}...`);
         
         // 1. Manually fetch the URL response using Crawlee's built-in helper
