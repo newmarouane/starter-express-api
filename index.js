@@ -9,13 +9,12 @@ app.get("/", async (req, res) => {
     let browser;
 
  let data;
- async function cloudScraperRun(){
 const result = await cloudscraper.get('https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011488&format=json')
   console.log(result);
-/*
+
 	 
     try {
-		console.log(process.env.CHROME_PATH);
+	/*	console.log(process.env.CHROME_PATH);
         browser = await puppeteer.launch({
            // executablePath: "/usr/bin/google-chrome",
 		    headless: true,
@@ -67,9 +66,9 @@ const result = await cloudscraper.get('https://medias24.com/content/api?method=g
             error: err.message,
         });
     } finally {
-        if (browser) {
+       /* if (browser) {
             await browser.close();
-        }
+        }*/
     }
 });
 
