@@ -1,7 +1,7 @@
 const express = require('express')
-const puppeteer = require('puppeteer-extra')
+//const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
-const chromium = require("rebrowser-puppeteer");
+import puppeteer from "rebrowser-puppeteer";
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
@@ -30,7 +30,7 @@ const viewport = {
   };
 
   const browser = await puppeteer.launch({
- // executablePath: "/usr/bin/google-chrome",
+  executablePath: "/usr/bin/google-chrome",
   headless: true,
   args: [
     "--no-sandbox",
