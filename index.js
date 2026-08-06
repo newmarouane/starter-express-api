@@ -7,6 +7,7 @@ app.get("/", async (req, res) => {
     let browser;
 
     try {
+		console.log(process.env.CHROME_PATH);
         browser = await puppeteer.launch({
             headless: true,
             args: [
