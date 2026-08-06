@@ -12,22 +12,25 @@ app.all('/', async (req, res) => {
 	console.log('req json');
 const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  page.on('response', async response => {
-    console.log('got response', response._url);
-    const data = await page.content();
-console.log(data);
-	  
+  await page.goto("https://example.com", {
+  waitUntil: "networkidle2",
+});
 
-    const innerText = await page.evaluate(() =>  {
-        return JSON.parse(document.querySelector("body").innerText); 
-    }); 
+// Wait a few seconds if Cloudflare performs checks
+await new Promise(resolve => setTimeout(resolve, 5000));
 
-    console.log("innerText now contains the JSON");
-    console.log(innerText);
-	  res.status(200).json(innerText);
+const json = await page.evaluate(async () => {
+  const res = await fetch("https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json", {
+    credentials: "include",
   });
-  await page.goto('https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json', {waitUntil: 'networkidle0'});
-  await browser.close()	;
+
+  return await res.json();
+});
+
+console.log(json);
+	await page.close();
+   await browser.close()	;
+	res.status(200).json(json);
 })
 		
 app.all('/job', async (req, res) => {
