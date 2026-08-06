@@ -1,107 +1,68 @@
 const express = require('express')
-//const puppeteer = require('puppeteer-extra')
-const { connect } = require("puppeteer-real-browser");
-const puppeteer = require('rebrowser-puppeteer')
-const chromium = require("@sparticuz/chromium");
+const puppeteer = require("puppeteer");
 
-const { BasicCrawler, RequestQueue } = require('crawlee');
-/*
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-puppeteer.use(StealthPlugin());*/
-//const puppeteer = require('puppeteer')
 const app = express()
-app.all('/', async (req, res) => {
-	console.log('req json');
 
+app.get("/", async (req, res) => {
+    let browser;
 
-	let data = {test:"et"};
-    const requestQueue = await RequestQueue.open();
-    await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
+    try {
+        browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+            ],
+        });
 
-    const crawler = new BasicCrawler({
-        requestQueue,
-       async requestHandler({ request, sendRequest, log }) {
-        log.info(`Fetching data from ${request.url}...`);
-        
-        // 1. Manually fetch the URL response using Crawlee's built-in helper
-        const response = await sendRequest({ url: request.url });
-        const body = response.body;
+        const page = await browser.newPage();
 
-        // 2. Now you can safely check the body and display data
-        if (body) {
-            log.info(`Body content length: ${body.length}`);
-            console.log(body); 
-			data = body;
-        } else {
-            log.warning('Response body is empty');
+        await page.setViewport({
+            width: 1366,
+            height: 768,
+        });
+
+        await page.goto("https://medias24.com", {
+            waitUntil: "networkidle2",
+            timeout: 60000,
+        });
+
+        // Give the page time to finish loading any client-side work.
+        await page.waitForTimeout(5000);
+
+        const result = await page.evaluate(async () => {
+            const response = await fetch(
+                "/content/api?method=getBidAsk&ISIN=MA0000011512&format=json",
+                {
+                    credentials: "include",
+                    headers: {
+                        "Accept": "application/json",
+                    },
+                }
+            );
+
+            return {
+                ok: response.ok,
+                status: response.status,
+                text: await response.text(),
+            };
+        });
+
+        console.log(result);
+
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: err.message,
+        });
+    } finally {
+        if (browser) {
+            await browser.close();
         }
-    },
-    });
-
-    await crawler.run();
-	
-
-/*
-
-//chromium.setGraphicsMode = false;
-
-	
-
-const viewport = {
-    deviceScaleFactor: 1,
-    hasTouch: false,
-    height: 1080,
-    isLandscape: true,
-    isMobile: false,
-    width: 1920,
-  };
-
-  const browser = await puppeteer.launch({
-  executablePath: await chromium.executablePath(),
-  headless: true,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-  ],
-});
-  const page = await browser.newPage();
-// Set a realistic user-agent to match the IP’s region and browser version
-await page.setUserAgent(
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-);
-
-// Randomize viewport slightly to avoid fingerprinting from consistent dimensions
-await page.setViewport({
-  width: Math.floor(1024 + Math.random() * 100),
-  height: Math.floor(768 + Math.random() * 100),
-});
-	// Look for iframes likely tied to CAPTCHA providers (Cloudflare, Turnstile, etc.)
-const isCaptcha = await page.$('iframe[src*="captcha"], iframe[src*="turnstile"]');
-
-
-	await page.goto("https://medias24.com", {
-  waitUntil: "networkidle2",
+    }
 });
 
-// Wait a few seconds if Cloudflare performs checks
-await new Promise(resolve => setTimeout(resolve, 5000));
-
-	const fullHtml2 = await page.content();
-  console.log('--- Full Content 2---');
-  console.log(fullHtml2);
-	
-const data = await page.evaluate(async () => {
-  const res = await fetch("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
-    credentials: "include",
-  });
-console.log(res);
-  return await res.json();
-});
-	await page.close();
-   await browser.close()	;*/
-	
-	res.status(200).json(data);
-})
 		
 app.all('/job', async (req, res) => {
     console.log("Just got a request!")
