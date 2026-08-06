@@ -20,19 +20,16 @@ app.all('/', async (req, res) => {
 let data = {};
     const crawler = new BasicCrawler({
       //  requestQueue,
-        aasync requestHandler({ request, sendRequest, pushData, log }) {
-          log.info(`Fetching JSON from: ${request.url}`);
+        async requestHandler({ request, body, response, log }) {
+        // Option 1: Display the raw text/HTML body directly
+        log.info(`Body content length: ${body.length}`);
+        console.log(body); 
 
-          // Fetch the URL and force JSON parsing
-          const { body } = await sendRequest({ responseType: 'json' });
-
-          // Access your JSON data directly from the body
-          log.info(`Data retrieved successfully! keys: ${Object.keys(body)}`);
-
-          data = body;
-console.log(data);
-        
-        },
+        // Option 2: Display response metadata (status code, headers)
+        console.log(`Status Code: ${response.statusCode}`);
+        console.log(`Content Type: ${response.headers['content-type']}`);
+			data = body;
+    },
     });
 
     await crawler.run(['https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json']);
