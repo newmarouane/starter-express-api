@@ -12,21 +12,21 @@ app.all('/', async (req, res) => {
 	console.log('req json');
 const browser = await puppeteer.launch();
   const page = await browser.newPage();
-	let json;
-  page.on("response", async (response) => {
-//  if (response.url().includes("/api/")) {
-    try {
-       json = await response.json();
-      console.log(json);
-    } catch {}
-//  }
+
+	await page.goto("https://medias24.com", {
+  waitUntil: "networkidle2",
 });
 
-await page.goto("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
-  //waitUntil: "networkidle2",
+// Wait a few seconds if Cloudflare performs checks
+await new Promise(resolve => setTimeout(resolve, 5000));
+
+const json = await page.evaluate(async () => {
+  const res = await fetch("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
+    credentials: "include",
+  });
+
+  return await res.json();
 });
-
-
 	await page.close();
    await browser.close()	;
 	res.status(200).json(json);
