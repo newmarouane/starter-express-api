@@ -16,37 +16,24 @@ app.all('/', async (req, res) => {
 
 
 
-	const { browser, page } = await connect({
-		executablePath: await chromium.executablePath(),
-    headless: true,
-
-    args: chromium.args,
-
-    customConfig: {},
-
-    turnstile: true,
-
-    connectOption: {},
-
-    disableXvfb: false,
-    ignoreAllFlags: false,
-    // proxy:{
-    //     host:'<proxy-host>',
-    //     port:'<proxy-port>',
-    //     username:'<proxy-username>',
-    //     password:'<proxy-password>'
-    // }
-  });
-  await page.goto("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json");
-const fullHtml = await page.content();
-  console.log('--- Full Content ---');
-  console.log(fullHtml);
-
-
+chromium.setGraphicsMode = false;
 
 	
-/*
-	const browser = await puppeteer.launch(); // Headed mode reduces bot detection
+
+const viewport = {
+    deviceScaleFactor: 1,
+    hasTouch: false,
+    height: 1080,
+    isLandscape: true,
+    isMobile: false,
+    width: 1920,
+  };
+  const browser = await puppeteer.launch({
+    args: await puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
+    defaultViewport: viewport,
+    executablePath: await chromium.executablePath(),
+    headless: "shell",
+  });
   const page = await browser.newPage();
 // Set a realistic user-agent to match the IP’s region and browser version
 await page.setUserAgent(
@@ -79,7 +66,7 @@ const data = await page.evaluate(async () => {
   });
 console.log(res);
   return await res.json();
-});*/
+});
 	await page.close();
    await browser.close()	;
 	res.status(200).json(data);
