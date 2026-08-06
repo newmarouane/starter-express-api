@@ -2,6 +2,7 @@ const express = require('express')
 //const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
 const puppeteer = require('rebrowser-puppeteer')
+const chromium = require("@sparticuz/chromium");
 /*
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());*/
@@ -30,7 +31,7 @@ const viewport = {
   };
 
   const browser = await puppeteer.launch({
- // executablePath: "/usr/bin/google-chrome",
+  executablePath: await chromium.executablePath(),
   headless: true,
   args: [
     "--no-sandbox",
