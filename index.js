@@ -1,11 +1,18 @@
 const express = require('express')
 const puppeteer = require("puppeteer");
 
+import  cloudscraper from 'cloudscraper';
 const app = express()
 
 app.get("/", async (req, res) => {
     let browser;
 
+ let data;
+ async function cloudScraperRun(){
+const result = await cloudscraper.get('https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011488&format=json')
+  console.log(result);
+/*
+	 
     try {
 		console.log(process.env.CHROME_PATH);
         browser = await puppeteer.launch({
@@ -50,7 +57,7 @@ app.get("/", async (req, res) => {
             };
         });
 
-        console.log(result);
+        console.log(result);*/
 
         res.json(result);
     } catch (err) {
