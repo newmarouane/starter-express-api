@@ -1,7 +1,7 @@
 const express = require('express')
 //const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
-import puppeteer from "rebrowser-puppeteer";
+const puppeteer = require('rebrowser-puppeteer')
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
