@@ -1,7 +1,7 @@
 const express = require('express')
 const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
-
+const chromium = require("@sparticuz/chromium");
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
@@ -20,7 +20,7 @@ app.all('/', async (req, res) => {
 		executablePath: await chromium.executablePath(),
     headless: true,
 
-    args: [],
+    args: chromium.args,
 
     customConfig: {},
 
