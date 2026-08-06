@@ -93,7 +93,7 @@ console.log(res);
 });
 	await page.close();
    await browser.close()	;*/
-	const data={};
+
 	res.status(200).json(data);
 })
 		
