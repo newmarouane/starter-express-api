@@ -26,10 +26,7 @@ await page.setViewport({
 	// Look for iframes likely tied to CAPTCHA providers (Cloudflare, Turnstile, etc.)
 const isCaptcha = await page.$('iframe[src*="captcha"], iframe[src*="turnstile"]');
 
-if (isCaptcha) {
-  console.log("CAPTCHA triggered");
-  // You may want to skip, retry with a new proxy, or solve it with a 3rd-party service
-}
+
 	await page.goto("https://medias24.com", {
   waitUntil: "networkidle2",
 });
@@ -41,7 +38,7 @@ const data = await page.evaluate(async () => {
   const res = await fetch("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
     credentials: "include",
   });
-
+console.log(res);
   return await res.json();
 });
 	await page.close();
