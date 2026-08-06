@@ -1,7 +1,8 @@
 const express = require('express')
 const puppeteer = require("puppeteer");
 
-import  cloudscraper from 'cloudscraper';
+var cloudscraper = require('cloudscraper');
+
 const app = express()
 
 app.get("/", async (req, res) => {
