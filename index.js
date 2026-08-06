@@ -3,13 +3,14 @@ const puppeteer = require('puppeteer-extra')
 
 
 
-
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 
 //const puppeteer = require('puppeteer')
 const app = express()
 app.all('/', async (req, res) => {
 	console.log('req json');
+
+
 const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -20,7 +21,7 @@ const browser = await puppeteer.launch();
 // Wait a few seconds if Cloudflare performs checks
 await new Promise(resolve => setTimeout(resolve, 5000));
 
-const json = await page.evaluate(async () => {
+const data = await page.evaluate(async () => {
   const res = await fetch("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
     credentials: "include",
   });
@@ -29,7 +30,7 @@ const json = await page.evaluate(async () => {
 });
 	await page.close();
    await browser.close()	;
-	res.status(200).json(json);
+	res.status(200).json(data);
 })
 		
 app.all('/job', async (req, res) => {
