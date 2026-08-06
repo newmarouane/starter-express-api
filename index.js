@@ -22,7 +22,7 @@ const browser = await puppeteer.launch();
 //  }
 });
 
-await page.goto("https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json", {
+await page.goto("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
   waitUntil: "networkidle2",
 });
 
