@@ -1,7 +1,7 @@
 const express = require('express')
 const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
-const chromium = require("@sparticuz/chromium");
+const chromium = require("rebrowser-puppeteer");
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
@@ -28,17 +28,15 @@ const viewport = {
     isMobile: false,
     width: 1920,
   };
-	let executablePath;
 
-if (!executablePath) {
-    executablePath = await chromium.executablePath();
-}
   const browser = await puppeteer.launch({
-    args: await puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
-    defaultViewport: viewport,
-    executablePath: executablePath,
-    headless: "shell",
-  });
+  executablePath: "/usr/bin/google-chrome",
+  headless: true,
+  args: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+  ],
+});
   const page = await browser.newPage();
 // Set a realistic user-agent to match the IP’s region and browser version
 await page.setUserAgent(
