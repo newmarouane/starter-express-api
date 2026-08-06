@@ -9,11 +9,12 @@ app.get("/", async (req, res) => {
     try {
 		console.log(process.env.CHROME_PATH);
         browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-            ],
+            executablePath: "/usr/bin/google-chrome",
+		    headless: true,
+		    args: [
+		        "--no-sandbox",
+		        "--disable-setuid-sandbox",
+		    ],
         });
 
         const page = await browser.newPage();
