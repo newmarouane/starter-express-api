@@ -14,7 +14,7 @@ app.all('/', async (req, res) => {
 	console.log('req json');
 
 
-
+	let data = {test:"et"};
     const requestQueue = await RequestQueue.open();
     await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
 
@@ -31,6 +31,7 @@ app.all('/', async (req, res) => {
         if (body) {
             log.info(`Body content length: ${body.length}`);
             console.log(body); 
+			data = body;
         } else {
             log.warning('Response body is empty');
         }
@@ -98,7 +99,7 @@ console.log(res);
 });
 	await page.close();
    await browser.close()	;*/
-	const data={};
+	
 	res.status(200).json(data);
 })
 		
