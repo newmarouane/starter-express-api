@@ -2,9 +2,9 @@ const express = require('express')
 //const puppeteer = require('puppeteer-extra')
 const { connect } = require("puppeteer-real-browser");
 const puppeteer = require('rebrowser-puppeteer')
-
+/*
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin());*/
 //const puppeteer = require('puppeteer')
 const app = express()
 app.all('/', async (req, res) => {
