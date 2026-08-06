@@ -23,7 +23,7 @@ const browser = await puppeteer.launch();
 });
 
 await page.goto("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
-  waitUntil: "networkidle2",
+  //waitUntil: "networkidle2",
 });
 
 
