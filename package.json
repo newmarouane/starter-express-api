@@ -22,7 +22,8 @@
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
     "puppeteer-real-browser": "^1.4.4",
-    "@sparticuz/chromium": "^131.0.1"
+    "rebrowser-puppeteer": "^23.3.1",
+  "rebrowser-puppeteer-core": "^23.3.1"
   },
   "engines": {
     "node": ">=20"
