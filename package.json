@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "./render-build.sh",
+    "build": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && ./render-build.sh",
     "start": "node index.js"
   },
   "repository": {
