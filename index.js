@@ -44,7 +44,7 @@ const fullHtml = await page.content();
 
 
 	
-
+/*
 	const browser = await puppeteer.launch(); // Headed mode reduces bot detection
   const page = await browser.newPage();
 // Set a realistic user-agent to match the IP’s region and browser version
@@ -78,7 +78,7 @@ const data = await page.evaluate(async () => {
   });
 console.log(res);
   return await res.json();
-});
+});*/
 	await page.close();
    await browser.close()	;
 	res.status(200).json(data);
