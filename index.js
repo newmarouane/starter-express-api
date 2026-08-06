@@ -10,16 +10,16 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 const app = express()
 app.all('/json', async (req, res) => {
 	console.log('req json');
-const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   page.on('response', async response => {
-    console.log('got response', response._url)
-    const data = await response.buffer()
+    console.log('got response', response._url);
+    const data = await response.buffer();
 console.log(data);
-  })
-  await page.goto('https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json', {waitUntil: 'networkidle0'})
-  await browser.close()	
-}
+  });
+  await page.goto('https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json', {waitUntil: 'networkidle0'});
+  await browser.close()	;
+})
 		
 app.all('/', async (req, res) => {
     console.log("Just got a request!")
