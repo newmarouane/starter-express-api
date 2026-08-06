@@ -20,9 +20,6 @@
     "express": "^4.17.1",
     "puppeteer": "^18.0.5",
     "puppeteer-extra": "^3.3.4",
-    "puppeteer-extra-plugin-stealth": "^2.11.1",
-     "crawlee": "^3.0.0",
-    "playwright": "^1.0.0"
-  },
-  "type": "module",
+    "puppeteer-extra-plugin-stealth": "^2.11.1"
+  }
 }
