@@ -17,7 +17,7 @@ app.all('/', async (req, res) => {
 
 
 	const { browser, page } = await connect({
-    headless: false,
+    headless: true,
 
     args: [],
 
