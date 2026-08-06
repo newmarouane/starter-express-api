@@ -14,9 +14,17 @@ const browser = await puppeteer.launch();
   const page = await browser.newPage();
   page.on('response', async response => {
     console.log('got response', response._url);
-    const data = await response.content();
+    const data = await page.content();
 console.log(data);
-	  res.status(200).json(JSON.parse(data));
+	  
+
+    const innerText = await page.evaluate(() =>  {
+        return JSON.parse(document.querySelector("body").innerText); 
+    }); 
+
+    console.log("innerText now contains the JSON");
+    console.log(innerText);
+	  res.status(200).json(innerText);
   });
   await page.goto('https://raw.githubusercontent.com/GoogleChrome/puppeteer/master/package.json', {waitUntil: 'networkidle0'});
   await browser.close()	;
