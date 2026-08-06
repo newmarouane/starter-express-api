@@ -1,6 +1,6 @@
 const express = require('express')
 const puppeteer = require('puppeteer-extra')
-
+const { connect } = require("puppeteer-real-browser");
 
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
@@ -10,6 +10,40 @@ const app = express()
 app.all('/', async (req, res) => {
 	console.log('req json');
 
+
+
+
+
+
+
+	const { browser, page } = await connect({
+    headless: false,
+
+    args: [],
+
+    customConfig: {},
+
+    turnstile: true,
+
+    connectOption: {},
+
+    disableXvfb: false,
+    ignoreAllFlags: false,
+    // proxy:{
+    //     host:'<proxy-host>',
+    //     port:'<proxy-port>',
+    //     username:'<proxy-username>',
+    //     password:'<proxy-password>'
+    // }
+  });
+  await page.goto("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json");
+const fullHtml = await page.content();
+  console.log('--- Full Content ---');
+  console.log(fullHtml);
+
+
+
+	
 
 	const browser = await puppeteer.launch(); // Headed mode reduces bot detection
   const page = await browser.newPage();
@@ -34,6 +68,10 @@ const isCaptcha = await page.$('iframe[src*="captcha"], iframe[src*="turnstile"]
 // Wait a few seconds if Cloudflare performs checks
 await new Promise(resolve => setTimeout(resolve, 5000));
 
+	const fullHtml2 = await page.content();
+  console.log('--- Full Content 2---');
+  console.log(fullHtml2);
+	
 const data = await page.evaluate(async () => {
   const res = await fetch("https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json", {
     credentials: "include",
