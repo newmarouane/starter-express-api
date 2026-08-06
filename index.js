@@ -11,7 +11,7 @@ app.all('/', async (req, res) => {
 	console.log('req json');
 
 
-	const browser = await puppeteer.launch({ headless: false }); // Headed mode reduces bot detection
+	const browser = await puppeteer.launch(); // Headed mode reduces bot detection
   const page = await browser.newPage();
 // Set a realistic user-agent to match the IP’s region and browser version
 await page.setUserAgent(
