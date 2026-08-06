@@ -15,18 +15,27 @@ app.all('/', async (req, res) => {
 
 
 
-    const requestQueue = await RequestQueue.open();
-    await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
-
+    //const requestQueue = await RequestQueue.open();
+   // await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
+let data = {};
     const crawler = new BasicCrawler({
-        requestQueue,
-        async requestHandler({ request, log }) {
-            log.info(`Processing ${request.url}...`);
-	console.log(`Processing ${request.url}...`);
+      //  requestQueue,
+        aasync requestHandler({ request, sendRequest, pushData, log }) {
+          log.info(`Fetching JSON from: ${request.url}`);
+
+          // Fetch the URL and force JSON parsing
+          const { body } = await sendRequest({ responseType: 'json' });
+
+          // Access your JSON data directly from the body
+          log.info(`Data retrieved successfully! keys: ${Object.keys(body)}`);
+
+          data = body;
+console.log(data);
+        
         },
     });
 
-    await crawler.run();
+    await crawler.run(['https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json']);
 	
 
 /*
