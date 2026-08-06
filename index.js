@@ -16,7 +16,7 @@ app.all('/', async (req, res) => {
 
 
 
-chromium.setGraphicsMode = false;
+//chromium.setGraphicsMode = false;
 
 	
 
