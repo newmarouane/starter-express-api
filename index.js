@@ -16,7 +16,7 @@ app.all('/', async (req, res) => {
 
 
     const requestQueue = await RequestQueue.open();
-    await requestQueue.addRequest({ url: 'https://github.com' });
+    await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
 
     const crawler = new BasicCrawler({
         requestQueue,
