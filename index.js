@@ -4,16 +4,32 @@ const puppeteer = require('puppeteer-extra')
 
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-
+puppeteer.use(StealthPlugin());
 //const puppeteer = require('puppeteer')
 const app = express()
 app.all('/', async (req, res) => {
 	console.log('req json');
 
 
-const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch({ headless: false }); // Headed mode reduces bot detection
   const page = await browser.newPage();
+// Set a realistic user-agent to match the IP’s region and browser version
+await page.setUserAgent(
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+);
 
+// Randomize viewport slightly to avoid fingerprinting from consistent dimensions
+await page.setViewport({
+  width: Math.floor(1024 + Math.random() * 100),
+  height: Math.floor(768 + Math.random() * 100),
+});
+	// Look for iframes likely tied to CAPTCHA providers (Cloudflare, Turnstile, etc.)
+const isCaptcha = await page.$('iframe[src*="captcha"], iframe[src*="turnstile"]');
+
+if (isCaptcha) {
+  console.log("CAPTCHA triggered");
+  // You may want to skip, retry with a new proxy, or solve it with a 3rd-party service
+}
 	await page.goto("https://medias24.com", {
   waitUntil: "networkidle2",
 });
