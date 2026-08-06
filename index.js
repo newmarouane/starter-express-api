@@ -15,24 +15,22 @@ app.all('/', async (req, res) => {
 
 
 
-    //const requestQueue = await RequestQueue.open();
-   // await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
-let data = {};
+    const requestQueue = await RequestQueue.open();
+    await requestQueue.addRequest({ url: 'https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json' });
+
     const crawler = new BasicCrawler({
-      //  requestQueue,
-        async requestHandler({ request, body, response, log }) {
-        // Option 1: Display the raw text/HTML body directly
-        log.info(`Body content length: ${body.length}`);
+        requestQueue,
+        async requestHandler({ request, log,response, body }) {
+            log.info(`Body content length: ${body.length}`);
         console.log(body); 
 
         // Option 2: Display response metadata (status code, headers)
         console.log(`Status Code: ${response.statusCode}`);
         console.log(`Content Type: ${response.headers['content-type']}`);
-			data = body;
-    },
+        },
     });
 
-    await crawler.run(['https://medias24.com/content/api?method=getBidAsk&ISIN=MA0000011512&format=json']);
+    await crawler.run();
 	
 
 /*
@@ -93,7 +91,7 @@ console.log(res);
 });
 	await page.close();
    await browser.close()	;*/
-
+	const data={};
 	res.status(200).json(data);
 })
 		
