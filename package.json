@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && node ./node_modules/puppeteer/install.js && npm install @sparticuz/chromium && node index.js"
+    "start": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && node ./node_modules/puppeteer/install.js && node index.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
     "puppeteer": "^18.0.5",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
-    "puppeteer-real-browser": "^1.4.4"
+    "puppeteer-real-browser": "^1.4.4",
+    "@sparticuz/chromium": "^131.0.1"
   },
   "engines": {
     "node": ">=20"
