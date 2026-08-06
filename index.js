@@ -3,6 +3,8 @@ const express = require('express')
 const { connect } = require("puppeteer-real-browser");
 const puppeteer = require('rebrowser-puppeteer')
 const chromium = require("@sparticuz/chromium");
+
+const { BasicCrawler, RequestQueue } = require('crawlee');
 /*
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());*/
@@ -13,9 +15,21 @@ app.all('/', async (req, res) => {
 
 
 
+    const requestQueue = await RequestQueue.open();
+    await requestQueue.addRequest({ url: 'https://github.com' });
 
+    const crawler = new BasicCrawler({
+        requestQueue,
+        async requestHandler({ request, log }) {
+            log.info(`Processing ${request.url}...`);
+	console.log(`Processing ${request.url}...`);
+        },
+    });
 
+    await crawler.run();
+	
 
+/*
 
 //chromium.setGraphicsMode = false;
 
@@ -72,7 +86,8 @@ console.log(res);
   return await res.json();
 });
 	await page.close();
-   await browser.close()	;
+   await browser.close()	;*/
+	const data={};
 	res.status(200).json(data);
 })
 		
