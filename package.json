@@ -27,7 +27,8 @@
     "@sparticuz/chromium": "^131.0.1",
     "crawlee": "^3.0.0",
     "cloudscraper": "^4.6.0",
-  "request": "^2.88.2"
+  "request": "^2.88.2",
+    "@playwright/test": "^1.49.0"
   },
   "engines": {
     "node": ">=20"
