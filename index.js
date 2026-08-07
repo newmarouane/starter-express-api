@@ -7,26 +7,6 @@ const { exec } = require('child_process');
 const app = express()
 
 app.get("/", async (req, res) => {
-const isin='MA0000012528';
-const medias24ApiUrl = `https://medias24.com/content/api?method=getBidAsk&ISIN=${isin}&format=json`;
-  
-	 const curlCommand = `curl -s "${medias24ApiUrl}" -H "Content-Type: application/json" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36"`;
-
-
-  const execAsync = promisify(exec);
-  const { stdout, stderr } = await execAsync(curlCommand);
-  console.log('curl call');
-
-  if (stderr) {
-    console.error('stderr:', stderr);
-  }
-
-  console.log('stdout:', stdout);
-
-  data = JSON.parse(stdout);
-
-  console.log('Data received:', data);
-
 
 	
     let browser;
