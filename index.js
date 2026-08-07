@@ -4,49 +4,50 @@ const puppeteer = require("puppeteer");
 var cloudscraper = require('cloudscraper');
   const { promisify } = require('util');
 const { exec } = require('child_process');
+import { chromium } from "playwright";
 const app = express()
 
+let browser;
 
+async function getBrowser() {
+  if (!browser) {
+    browser = await chromium.launch({
+      headless: true
+    });
+  }
+
+  return browser;
+}
 app.get("/", async (req, res) => {
+ const target = req.query.url;
+
+  if (!target) {
+    return res.status(400).json({ error: "Missing url" });
+  }
+
   try {
-    const target = req.query.url;
+    const browser = await getBrowser();
 
-    if (!target) {
-      return res.status(400).json({
-        error: "Missing url parameter"
-      });
-    }
-
-    const url = new URL(target);
-
-    // Optional: restrict domains
-    if (url.hostname !== "medias24.com" &&
-        !url.hostname.endsWith("medias24.com")) {
-      return res.status(403).json({
-        error: "Domain not allowed"
-      });
-    }
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150 Safari/537.36",
-        "Accept": "application/json,text/plain,*/*",
-        "Referer": "https://medias24.com/"
-      }
+    const page = await browser.newPage({
+      userAgent:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+        "AppleWebKit/537.36 (KHTML, like Gecko) " +
+        "Chrome/150.0.0.0 Safari/537.36"
     });
 
-    const body = await response.text();
+    await page.goto(target, {
+      waitUntil: "domcontentloaded",
+      timeout: 30000
+    });
 
-    res.status(response.status);
+    // Wait for Cloudflare/navigation to finish
+    await page.waitForTimeout(5000);
 
-    res.setHeader(
-      "Content-Type",
-      response.headers.get("content-type") || "application/json"
-    );
+    const content = await page.locator("body").innerText();
 
-    res.send(body);
+    await page.close();
+
+    res.type("text/plain").send(content);
 
   } catch (error) {
     console.error(error);
