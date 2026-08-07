@@ -7,7 +7,8 @@ const app = express()
 
 app.get("/", async (req, res) => {
 
-
+const medias24ApiUrl = `https://medias24.com/content/api?method=getBidAsk&ISIN=${isin}&format=json`;
+  
 	 const curlCommand = `curl -s "${medias24ApiUrl}" -H "Content-Type: application/json" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36"`;
 
 
