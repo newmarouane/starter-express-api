@@ -19,6 +19,15 @@ async function getBrowser() {
   return browser;
 }
 app.get("/", async (req, res) => {
+
+
+const browser = await chromium.launch({
+  headless: true
+});
+
+const page = await browser.newPage();
+
+
  const target = req.query.url;
 
   if (!target) {
