@@ -1,9 +1,9 @@
-const express = require('express')
-const puppeteer = require("puppeteer");
+import express from 'express';
+/*const puppeteer = require("puppeteer");
 
 var cloudscraper = require('cloudscraper');
   const { promisify } = require('util');
-const { exec } = require('child_process');
+const { exec } = require('child_process');*/
 import { chromium } from "playwright";
 const app = express()
 
