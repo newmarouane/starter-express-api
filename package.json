@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx playwright install",
+    "build": "npx playwright install chromium",
     "start": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && node ./node_modules/puppeteer/install.js && node index.js"
   },
   "repository": {
@@ -29,7 +29,7 @@
     "crawlee": "^3.0.0",
     "cloudscraper": "^4.6.0",
   "request": "^2.88.2",
-    "@playwright/test": "^1.49.0"
+    "playwright": "^1.55.0"
   },
   "engines": {
     "node": ">=20"
