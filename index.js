@@ -6,7 +6,58 @@ var cloudscraper = require('cloudscraper');
 const { exec } = require('child_process');
 const app = express()
 
+
 app.get("/", async (req, res) => {
+  try {
+    const target = req.query.url;
+
+    if (!target) {
+      return res.status(400).json({
+        error: "Missing url parameter"
+      });
+    }
+
+    const url = new URL(target);
+
+    // Optional: restrict domains
+    if (url.hostname !== "medias24.com" &&
+        !url.hostname.endsWith("medias24.com")) {
+      return res.status(403).json({
+        error: "Domain not allowed"
+      });
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150 Safari/537.36",
+        "Accept": "application/json,text/plain,*/*",
+        "Referer": "https://medias24.com/"
+      }
+    });
+
+    const body = await response.text();
+
+    res.status(response.status);
+
+    res.setHeader(
+      "Content-Type",
+      response.headers.get("content-type") || "application/json"
+    );
+
+    res.send(body);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: error.message
+    });
+  }
+});
+
+app.get("/proxy", async (req, res) => {
 
 	
     let browser;
