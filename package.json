@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm uninstall playwright-core && npm install playwright && npm ci && npx playwright install --with-deps chromium",
+    "build": "npm ci && PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install --with-deps chromium",
     "start": "unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && node ./node_modules/puppeteer/install.js && node index.js"
   },
   "repository": {
